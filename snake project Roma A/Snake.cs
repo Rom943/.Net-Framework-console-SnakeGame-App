@@ -41,11 +41,7 @@ namespace snake_project_Roma_A
             Clear();
 
             Body.Enqueue(new Pixel(Head.X, Head.Y, _bodyColor));
-            //if (!eat)
-            //{
-            //    Body.Dequeue();
-            //}
-
+  
             Head = direction switch
             {
                 Direction.Right => new Pixel(Head.X + 1, Head.Y, _headColor),

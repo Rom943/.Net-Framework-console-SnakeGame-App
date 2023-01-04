@@ -38,9 +38,9 @@ namespace snakeProjectRomaA
            
             while (true)
             {
-                
-                
-                stopwatch.Restart();
+
+
+                Clear();
                 SetCursorPosition(10, 10);
                 Console.ForegroundColor = HeadColor;
                 Console.WriteLine("Welcome to Roma Alexeichick Project");
@@ -61,10 +61,18 @@ namespace snakeProjectRomaA
                 Console.WriteLine("* each time you collide with the snakes head:");
                 Console.WriteLine("  the game will restart");
                 Console.WriteLine("  but each time will be add + 1 shape until 15 shapes");
-                Console.WriteLine(" Enter how many shaps you want to start?:");
-                 int score = Convert.ToInt32( Console.ReadLine());
-                Console.WriteLine("Press key to start");
+                Console.WriteLine(" Enter how many shaps you want to start?:(1-14)");
+                int score;
+                int.TryParse(Console.ReadLine(),out score);
+                while(score == 0||score>14)
+                {
+                    Console.WriteLine("Illegal action,only numbers between 1 to 14");
+                    Console.WriteLine("try again");
+                    int.TryParse(Console.ReadLine(), out score);
+                }
+                Console.WriteLine("Press any key to start");
                 ReadKey();
+                stopwatch.Restart();
                 CursorVisible = false;
                 StartGame(score);
                 Console.WriteLine(stopwatch.Elapsed.TotalSeconds);
@@ -108,7 +116,7 @@ namespace snakeProjectRomaA
                     || snake.Head.Y == 0
                     || snake.Body.Any(b => b.X == snake.Head.X && b.Y == snake.Head.Y))
                 {
-                    if (score < 15) { score++; };
+                    if (score < 15) { ++score; };
                     Task.Run(() => Beep(1200, 200));
                     Clear();
                     DrawBorder();
@@ -126,8 +134,7 @@ namespace snakeProjectRomaA
 
             }
             stopwatch.Stop();
-            snake.Clear();
-            shape.Clear();
+            Clear();
             SetCursorPosition(ScreenWidth / 3-9, ScreenHeight / 2);
             Console.WriteLine("You have maneged to stay in the game for:" );
             SetCursorPosition(ScreenWidth / 3-8, ScreenHeight / 2+1);
